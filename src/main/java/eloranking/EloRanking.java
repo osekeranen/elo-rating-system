@@ -76,6 +76,7 @@ public class EloRanking<T> {
                 
                 if (ranking.get(player) == rating) {
                     sortedRanking.put(player, rating);
+                    playerIterator.remove();
                     break;
                 }
             }
