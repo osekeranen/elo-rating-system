@@ -48,6 +48,15 @@ public class EloRanking<T> {
         ranking.put(A, this.getRating(A) + delta);
         ranking.put(B, this.getRating(B) - delta);
     }
+
+    /**
+     * Returns the rankings.
+     * 
+     * @return the rankings
+     */
+    public HashMap<T, Integer> getRanking() {
+        return ranking;
+    }
     
     /**
      * Returns the rating of the specified player.
