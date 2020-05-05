@@ -1,13 +1,19 @@
 package eloranking;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a simple class for implementing the Elo rating system. 
  */
 public class EloRanking<T> {
     
-    private HashMap<T, Integer> ranking;
+    private Map<T, Integer> ranking;
 
     /**
      * Constructs an empty ranking.
@@ -50,12 +56,32 @@ public class EloRanking<T> {
     }
 
     /**
-     * Returns the rankings.
+     * Returns the rankings sorted by ratings.
      * 
-     * @return the rankings
+     * @return the rankings sorted by ratings
      */
-    public HashMap<T, Integer> getRanking() {
-        return ranking;
+    public LinkedHashMap<T, Integer> getRanking() {
+        List<T> players = new ArrayList<>(ranking.keySet());
+        List<Integer> ratings = new ArrayList<>(ranking.values());
+        Collections.sort(ratings, Collections.reverseOrder());
+        LinkedHashMap<T, Integer> sortedRanking = new LinkedHashMap<>();
+        
+        Iterator<Integer> ratingIterator = ratings.iterator();
+        while (ratingIterator.hasNext()) {
+            int rating = ratingIterator.next();
+            Iterator<T> playerIterator = players.iterator();
+            
+            while (playerIterator.hasNext()) {
+                T player = playerIterator.next();
+                
+                if (ranking.get(player) == rating) {
+                    sortedRanking.put(player, rating);
+                    break;
+                }
+            }
+        }
+        
+        return sortedRanking;
     }
     
     /**
